@@ -1,0 +1,11 @@
+{
+    "users": [
+        {
+            "firstName": "cosmin",
+            "lastName": "dimisca",
+            "password": "$2a$08$pF/QMSgTdWUjQI4Ri5RpX.uLT0.nqZhlIHYhvHDyfe2oQ/X8I5jbW",
+            "email": "cosmindimisca@gmail.com",
+            "uuid": "1d96cafd-2c59-5d48-a5d6-205da557c1b2"
+        }
+    ]
+}
