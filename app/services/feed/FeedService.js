@@ -2,16 +2,18 @@ var JWTService = require('../JWTService');
 var postService = require('../post/PostService');
 
 var NoTokenError = require('../../errors/NoTokenError');
-var UnauthorizedException = require('../../errors/UnauthorizedException');
+var UnauthorizedError = require('../../errors/UnauthorizedError');
+
+var errorMessages = require('../../constants/ErrorMessages');
 
 module.exports.feedContent = async (token) => {
     if(!token) {
-        throw new NoTokenError("No token found!");
+        throw new NoTokenError(errorMessages.NO_TOKEN_ERROR);
     }
 
     var jwtCheck = await JWTService.verifyToken(token);
     if(!jwtCheck) {
-        throw new UnauthorizedException("You do not have the permission for this operation!");
+        throw new UnauthorizedError(errorMessages.UNAUTHORIZED_ERROR);
     }
 
     return postService.getAllPosts();
@@ -19,12 +21,12 @@ module.exports.feedContent = async (token) => {
 
 module.exports.addPost = async (token, post) => {
     if(!token) {
-        throw new NoTokenError("No token found!");
+        throw new NoTokenError(errorMessages.NO_TOKEN_ERROR);
     }
 
     var jwtCheck = await JWTService.verifyToken(token);
     if(!jwtCheck) {
-        throw new UnauthorizedException("You do not have the permission for this operation!");
+        throw new UnauthorizedError(errorMessages.UNAUTHORIZED_ERROR);
     }
 
     await postService.savePost(post);

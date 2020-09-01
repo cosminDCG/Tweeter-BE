@@ -7,10 +7,12 @@ var ExistingUserError = require('../../errors/ExistingUserError');
 var InvalidPasswordError = require('../../errors/InvalidPasswordError');
 var UserNotFoundError = require('../../errors/UserNotFoundError');
 
+var errorMessages = require('../../constants/ErrorMessages');
+
 module.exports.register = async (user) => {
     var existingUser = await userService.getUserByEmail(user.email);
     if(existingUser != undefined){
-        throw new ExistingUserError("User alredy registered!");
+        throw new ExistingUserError(errorMessages.EXISTING_USER_ERROR);
     }
     
     user.password = CryptService.crypt(user.password);
@@ -24,12 +26,12 @@ module.exports.register = async (user) => {
 module.exports.login = async (user) => {
     var existingUser = await userService.getUserByEmail(user.email);
     if(existingUser == undefined){
-        throw new UserNotFoundError("We couldn't find the user!");
+        throw new UserNotFoundError(errorMessages.USER_NOT_FOUND_ERROR);
     }
     var checkPass = CryptService.checkCryptGuess(user.password, existingUser.password);
     
     if(!checkPass){
-        throw new InvalidPasswordError("Wrong password!");
+        throw new InvalidPasswordError(errorMessages.INVALID_PASSWORD_ERROR);
     }
     
     var token = JWTService.generateToken(existingUser.uuid);
