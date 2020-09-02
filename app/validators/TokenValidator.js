@@ -4,7 +4,7 @@ var JWTService = require('../services/JWTService');
 var NoTokenError = require('../errors/NoTokenError');
 var UnauthorizedError = require('../errors/UnauthorizedError');
 
-module.exports.validateToken = (token) => {
+module.exports.validateToken = async (token) => {
     if(!token) {
         throw new NoTokenError(errorMessages.NO_TOKEN_ERROR);
     }
