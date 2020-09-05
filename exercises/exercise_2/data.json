@@ -1,0 +1,15 @@
+{
+    "nume": "Cosmin Dimisca",
+    "dataNastere": "18.08.1997",
+    "facultate": {
+        "nume": "FMI",
+        "oras": "Bucuresti"
+    },
+    "cursuri": [
+        "Angular",
+        "Java",
+        "Node",
+        "Node",
+        "Node"
+    ]
+}
