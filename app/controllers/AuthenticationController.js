@@ -16,9 +16,9 @@ router.post('/api/register', async function(req, res) {
     }
 })
 
-router.post('/api/login', async function(req, res) {
+router.get('/api/login', async function(req, res) {
     try{
-        var user = new User(undefined, undefined, req.body.password, req.body.email);
+        var user = new User(req.params.password, req.params.email);
         var token = await authenticationService.login(user);
         res.status(200).send({
             token: token

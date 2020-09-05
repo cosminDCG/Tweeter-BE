@@ -8,8 +8,8 @@ var userValidator = require('../../validators/UserValidator');
 module.exports.register = async (user) => {
     userValidator.validateRegister(user);
 
-    user.password = CryptService.crypt(user.password);
     user.uuid = Util.generateUUID(user.email);
+    user.password = CryptService.crypt(user.password);
 
     await userService.saveUser(user);
     var token = JWTService.generateToken(user.uuid);
