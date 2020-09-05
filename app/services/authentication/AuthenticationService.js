@@ -5,18 +5,18 @@ var Util = require('../../utils/Utils');
 
 var userValidator = require('../../validators/UserValidator');
 
-module.exports.register = async (user) => {
+module.exports.register = (user) => {
     userValidator.validateRegister(user);
 
     user.uuid = Util.generateUUID(user.email);
     user.password = CryptService.crypt(user.password);
 
-    await userService.saveUser(user);
+    userService.saveUser(user);
     var token = JWTService.generateToken(user.uuid);
     return token;
 }
 
-module.exports.login = async (user) => {
+module.exports.login = (user) => {
     var uuid = userValidator.validateLogin(user);
 
     var token = JWTService.generateToken(uuid);

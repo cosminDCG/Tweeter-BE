@@ -3,16 +3,17 @@ var router = express.Router();
 
 var feedService = require('../services/feed/FeedService');
 var Post = require('../dto/Post');
+var ErrorDetails = require('../dto/ErrorDetails');
 
-router.get('/api/posts', async function(req, res) {
+router.get('/api/posts', function(req, res) {
     var token = req.headers['x-access-token'];
     try{
-        posts = await feedService.feedContent(token);
+        posts = feedService.feedContent(token);
         res.status(200).send({
             posts: posts
         });
     }catch(err) {
-        res.status(400).send(err.code + " " + err.message);
+        res.status(400).send(new ErrorDetails(err.code, err.message));
     }
 })
 
@@ -25,7 +26,7 @@ router.post('/api/post', async function(req, res) {
             status: "DONE"
         });
     }catch(err) {
-        res.status(400).send(err.code + " " + err.message);
+        res.status(400).send(new ErrorDetails(err.code, err.message));
     }
 })
 

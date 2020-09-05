@@ -5,10 +5,7 @@ module.exports.crypt = (data) => {
     return bcrypt.hashSync(data, Config.salt);
 }
 
-module.exports.checkCryptGuess = async (data, dataToCompare) => {
-    var check;
-    await bcrypt.compare(data, dataToCompare).then((res) => {
-        check =  res;
-    })
+module.exports.checkCryptGuess = (data, dataToCompare) => {
+    var check = bcrypt.compareSync(data, dataToCompare)
     return check;
 }

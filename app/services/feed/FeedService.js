@@ -1,14 +1,16 @@
 var postService = require('../post/PostService');
 var tokenValidator = require('../../validators/TokenValidator');
+var Util = require('../../utils/Utils');
 
-module.exports.feedContent = async (token) => {
+module.exports.feedContent = (token) => {
     tokenValidator.validateToken(token);
     
     return postService.getAllPosts();
 }
 
-module.exports.addPost = async (token, post) => {
+module.exports.addPost = (token, post) => {
     tokenValidator.validateToken(token);
 
-    await postService.savePost(post);
+    post.uuid = Util.generateUUID(post.text);
+    postService.savePost(post);
 }
