@@ -30,6 +30,12 @@
             "text": "hello",
             "date": "05.09.2020",
             "uuid": "5577da1a-aba3-5dbb-a8c2-98307a99ebc4"
+        },
+        {
+            "userId": "$2a$08$UrEc6j8VoDymrcNPtbFnX.q347m9vVra.1l.DTCwUoy3hcYC/ynbu",
+            "text": "hello",
+            "date": "05.09.2020",
+            "uuid": "5577da1a-aba3-5dbb-a8c2-98307a99ebc4"
         }
     ]
 }

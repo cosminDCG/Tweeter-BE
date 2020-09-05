@@ -17,11 +17,11 @@ router.get('/api/posts', function(req, res) {
     }
 })
 
-router.post('/api/post', async function(req, res) {
+router.post('/api/post', function(req, res) {
     var token = req.headers['x-access-token'];
     try{
         var post = new Post(req.body.userId, req.body.text, req.body.date);
-        await feedService.addPost(token, post);
+        feedService.addPost(token, post);
         res.status(200).send({
             status: "DONE"
         });
