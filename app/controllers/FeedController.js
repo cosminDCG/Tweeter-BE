@@ -9,9 +9,7 @@ router.get('/api/posts', function(req, res) {
     var token = req.headers['x-access-token'];
     try{
         posts = feedService.feedContent(token);
-        res.status(200).send({
-            posts: posts
-        });
+        res.status(200).send(posts);
     }catch(err) {
         res.status(400).send(new ErrorDetails(err.code, err.message));
     }
@@ -20,7 +18,7 @@ router.get('/api/posts', function(req, res) {
 router.post('/api/post', function(req, res) {
     var token = req.headers['x-access-token'];
     try{
-        var post = new Post(req.body.userId, req.body.text, req.body.date);
+        var post = new Post(req.body.tweet);
         feedService.addPost(token, post);
         res.status(200).send({
             status: "DONE"

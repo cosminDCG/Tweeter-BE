@@ -11,6 +11,6 @@ module.exports.feedContent = (token) => {
 module.exports.addPost = (token, post) => {
     tokenValidator.validateToken(token);
 
-    post.uuid = Util.generateUUID(post.text);
+    post.uuid = Util.generateUUID(post.tweet);
     postService.savePost(post);
 }
