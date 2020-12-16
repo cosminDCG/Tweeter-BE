@@ -1,6 +1,7 @@
 class Post {
-    constructor(tweet){
+    constructor(tweet, userUuid){
         this.tweet = tweet || null;
+        this.userUuid = userUuid || null;
     }
 }
 

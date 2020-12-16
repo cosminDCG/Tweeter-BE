@@ -6,15 +6,16 @@ var ExistingUserError = require('../errors/ExistingUserError');
 var InvalidPasswordError = require('../errors/InvalidPasswordError');
 var UserNotFoundError = require('../errors/UserNotFoundError');
 
-module.exports.validateRegister = (user) => {
-    var existingUser = userService.getUserByEmail(user.email);
+module.exports.validateRegister = async (user) => {
+    var existingUser = await userService.getUserByEmail(user.email);
     if(existingUser != undefined){
         throw new ExistingUserError(errorMessages.EXISTING_USER_ERROR);
     }
 }
 
-module.exports.validateLogin = (user) => {
-    var existingUser = userService.getUserByEmail(user.email);
+module.exports.validateLogin = async (user) => {
+    console.log(user);
+    var existingUser = await userService.getUserByEmail(user.email);
     if(existingUser == undefined){
         throw new UserNotFoundError(errorMessages.USER_NOT_FOUND_ERROR);
     }

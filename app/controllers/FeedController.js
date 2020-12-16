@@ -5,25 +5,35 @@ var feedService = require('../services/feed/FeedService');
 var Post = require('../dto/Post');
 var ErrorDetails = require('../dto/ErrorDetails');
 
-router.get('/api/posts', function(req, res) {
+router.get('/api/posts', async function(req, res) {
     var token = req.headers['x-access-token'];
     try{
-        posts = feedService.feedContent(token);
+        posts = await feedService.feedContent(token);
         res.status(200).send(posts);
-    }catch(err) {
+    } catch(err) {
         res.status(400).send(new ErrorDetails(err.code, err.message));
     }
 })
 
-router.post('/api/post', function(req, res) {
+router.post('/api/post', async function(req, res) {
     var token = req.headers['x-access-token'];
     try{
         var post = new Post(req.body.tweet);
-        feedService.addPost(token, post);
+        await feedService.addPost(token, post);
         res.status(200).send({
             status: "DONE"
         });
-    }catch(err) {
+    } catch(err) {
+        res.status(400).send(new ErrorDetails(err.code, err.message));
+    }
+})
+
+router.get('/api/posts/me', async function(req, res) {
+    var token = req.headers['x-access-token'];
+    try {
+        posts = await feedService.getPostsForUser(token);
+        res.status(200).send(posts);
+    } catch(err) {
         res.status(400).send(new ErrorDetails(err.code, err.message));
     }
 })

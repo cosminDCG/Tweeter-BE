@@ -13,4 +13,6 @@ module.exports.validateToken = (token) => {
     if(!jwtCheck) {
         throw new UnauthorizedError(errorMessages.UNAUTHORIZED_ERROR);
     }
+
+    return jwtCheck;
 }

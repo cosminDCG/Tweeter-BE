@@ -5,22 +5,23 @@ var authenticationService = require('../services/authentication/AuthenticationSe
 var User = require('../dto/User');
 var ErrorDetails = require('../dto/ErrorDetails');
 
-router.post('/api/register', function(req, res) {
+router.post('/api/register', async function(req, res) {
     try{
         var user = new User(req.body.password, req.body.email);
-        var token = authenticationService.register(user);
+        await authenticationService.register(user);
+        delete user.password;
         res.status(200).send({
-            token: token
+            user: user
         });
     }catch(err) {
         res.status(500).send(new ErrorDetails(err.code, err.message));
     }
 })
 
-router.get('/api/login', function(req, res) {
+router.get('/api/login', async function(req, res) {
     try{
         var user = new User(req.query.password, req.query.email);
-        var token = authenticationService.login(user);
+        var token = await authenticationService.login(user);
         res.status(200).send({
             token: token
         });

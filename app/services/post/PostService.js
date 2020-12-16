@@ -1,13 +1,15 @@
-const tableName = require("../../constants/TableName");
-var utils = require("../../utils/Utils");
+var postStorage = require("../storages/PostStorageService");
 
-module.exports.getAllPosts = () => {
-    let posts = utils.readJSONFileByTableName(tableName.POST_TABLE);
-    return posts;
+module.exports.getAllPosts = async () => {
+    let result = await postStorage.getAll();
+    return result.Items;
 }
 
-module.exports.savePost = (post) => {
-    var posts = utils.readJSONFileByTableName(tableName.POST_TABLE);
-    posts.push(post);
-    let result = utils.writeJSONFile(tableName.POST_TABLE, posts);
+module.exports.getPostsByUserUuid = async (userUuid) => {
+    let result = await postStorage.getByUserUuid(userUuid);
+    return result.Items;
+}
+
+module.exports.savePost = async (post) => {
+    let result = await postStorage.put(post);
 }

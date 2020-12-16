@@ -1,13 +1,13 @@
-const tableName = require("../../constants/TableName");
-var utils = require("../../utils/Utils");
+var userStorage = require("../storages/UserStorageService");
 
-module.exports.saveUser = (user) => {
-    var users = utils.readJSONFileByTableName(tableName.USER_TABLE);
-    users.push(user);
-    let result = utils.writeJSONFile(tableName.USER_TABLE, users);
+module.exports.saveUser = async (user) => {
+    let result = await userStorage.put(user);
 }
 
-module.exports.getUserByEmail =  (email) => {
-    let users = utils.readJSONFileByTableName(tableName.USER_TABLE);
-    return users.filter( user => user.email == email)[0];
+module.exports.getUserByEmail =  async (email) => {
+    let result = await userStorage.getByEmail(email);
+    if(result.Items != undefined) {
+        return result.Items[0];
+    }
+    return undefined;   
 }

@@ -2,30 +2,30 @@ const fs = require("fs");
 var UUIDGenerator = require('uuid');
 var Config = require("../env/Config");
 
-module.exports.readJSONFileByTableName = (table) => {
-  var result = JSON.parse(fs.readFileSync("C:/Users/cosmi/OneDrive/Desktop/Tweeter-BE/app/utils/db.json"))[table];
-  return result ? result : [];
-}
-
-module.exports.readJSONFile = () => {
-  var result = JSON.parse(fs.readFileSync("C:/Users/cosmi/OneDrive/Desktop/Tweeter-BE/app/utils/db.json"));
-  return result ? result : [];
-}
-
-module.exports.writeJSONFile = (table, content) => {
-  var json = this.readJSONFile();
-  json[table] = content;
-  fs.writeFileSync(
-    "C:/Users/cosmi/OneDrive/Desktop/Tweeter-BE/app/utils/db.json",
-    JSON.stringify(json, null, 4),
-    "utf8",
-    err => {
-      if (err) {
-        console.log(err);
+module.exports.promisify = (object, func) => {
+  return function (...args) { // return a wrapper-function
+    return new Promise((resolve, reject) => {
+      function callback(err, result) { // our custom callback for f
+        if (err) {
+          return reject(err);
+        } else {
+          resolve(result);
+        }
       }
-    }
-  );
+
+      args.push(callback); // append our custom callback to the end of f arguments
+
+      func.call(object, ...args); // call the original function
+    });
+  };
+};
+
+
+module.exports.invokeCallbackFunction = async (object, func, ...args) =>{
+    let promisAwareFunction = this.promisify(object, func);
+    return await promisAwareFunction(...args);
 }
+
 
 module.exports.generateUUID = (data) => {
     return UUIDGenerator.v5(data, Config.namespaceUUID);

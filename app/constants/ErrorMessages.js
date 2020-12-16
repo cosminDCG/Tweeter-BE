@@ -1,4 +1,4 @@
-module.exports.EXISTING_USER_ERROR = "User alredy registered!";
+module.exports.EXISTING_USER_ERROR = "User already registered!";
 module.exports.USER_NOT_FOUND_ERROR = "We couldn't find the user!";
 module.exports.INVALID_PASSWORD_ERROR = "Wrong password!";
 module.exports.NO_TOKEN_ERROR = "No token provided!";
